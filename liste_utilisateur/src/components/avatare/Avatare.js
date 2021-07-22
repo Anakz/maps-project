@@ -11,12 +11,12 @@ const useStyless = makeStyles((theme) => ({
     },
   }));
 
-function Photo(props) {
+function Avatare(props) {
     const classes = useStyless();
     return (
-        <Avatar value="Nikola" alt={props.name} src="/static/images/avatar/1.jpg" />
+        <Avatar alt={props.name} src="/static/images/avatar/1.jpg" />
     )
 }
 
 
-export default Photo
+export default Avatare

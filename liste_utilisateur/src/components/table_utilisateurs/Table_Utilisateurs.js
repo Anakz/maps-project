@@ -17,8 +17,7 @@ import {Button} from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
 
-//avatar
-import Photo from './photo/Photo'
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -35,6 +34,7 @@ const StyledTableCell = withStyles((theme) => ({
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
+        //dddddd
     },
   },
 }))(TableRow);
@@ -90,7 +90,7 @@ function Table_Utilisateurs() {
             <StyledTableRow key={row.id}>
 
               <StyledTableCell component="th" scope="row">
-                <Photo name={row.name}/>{row.name}
+                {row.name}
               </StyledTableCell>
 
               <StyledTableCell align="left">{row.email}</StyledTableCell>
