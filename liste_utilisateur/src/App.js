@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import Table_Utilisateurs from './components/table_utilisateurs/Table_Utilisateurs'
+import Modale from './components/modal/Modale'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="App-header">
+        <div className="App-body">
+
+        <Modale />
+        <h2 className="hh">Listes des utilisateurs</h2>
+        <Table_Utilisateurs />
+
+        </div>        
+      </div>
     </div>
   );
 }
