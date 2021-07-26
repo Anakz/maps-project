@@ -1,14 +1,14 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import './Table_Utilisateurs.css'
 
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+//Modale pour visualiser
+import VisualiserModal from '../visualiserModal/VisualiserModal';
+
+//Modale.js
+import Modale from '../modal/Modale';
+
+//Avatar
+import Avatare from '../avatare/Avatare';
 
 //Button
 import {Button} from '@material-ui/core'
@@ -18,96 +18,138 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: '#E2F5FF',
-    border:6,
-    borderRadius:4,
-  },
-  body: {
-    fontSize: 14,
-    backgroundColor: '#00000',
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-        //dddddd
-    },
-  },
-}))(TableRow);
-
-function createData(id ,name, email, DateNaissance, carbs) {
-  return { id ,name, email, DateNaissance, carbs };
+function createData(id ,name, email, DateNai, image) {
+  return { id ,name, email, DateNai, image };
 }
 
-//Nouveau array
+//Exemple inutile array
 const fruits = [{id:"Banana", nome:"Orange", email:"Apple", date:"Mango"}];
 
-const rows = [
-  createData('1','Anas AKZAZ', 'anasakzaz23@gmail.com', "23/04/2000"),
-  createData('2','Sanae NACER', 'sanaenacer@gmail.com', "18/07/1993"),
-  createData('3','Younes SEFIANI', 'younessefiani592@gmail.com', "05/09/2000"),
-  createData('4','Ayoub HMIDI', 'ayoubhmidi@gmail.com', "25/02/2002"),
+//Notre tableau
+const rows = 
+[
 ];
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-    background: 'white',
-    border:3,
-    borderRadius:15,
-    borderColor: 'red',
-    style: { width: '1rem', height: '1rem' },
-  },
-});
-
-
 function Table_Utilisateurs() {
-  const classes = useStyles();
+
+    //Les 6 variables de type state (id, name, email,date naissance, image)
+    const [id, setId] = useState()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [dateNai, setDateNai] = useState('')
+    const [image, setImage] = useState('')
+
+    //une variable pour savoir si le tableau est vide ou non
+    const [tableVide, setTableVide] = useState(true)
+  
+  //importer les coordonnées depuis le component 'Modale.js' avec la methode useEffect
+  const remplirTableau =(idd,n,e,d,i)=>
+  {
+    setId(idd)
+    setName(n);
+    setEmail(e)
+    setDateNai(d)
+    setImage(i);
+
+    if (idd && n && e && d) 
+    {
+      setTableVide(true)//savoir que le tableau est vide
+      rows.push(createData(id, n, e, d, i))
+    }
+  }
+
+  //Function pour supprimer une ligne précise
+  const handleDelete = (userId) =>
+  {
+    /*{rows.map((row) => { 
+     if (row.id!== userId) {
+        //row.pop(userId)
+        //rows.pop(userId)
+        rows.push(createData(row.id,row.name,row.email,row.dateNai,row.image))
+     }
+     var array = [...this.state.people]; // make a separate copy of the array
+  var index = array.indexOf(e.target.value)
+  array.splice(index, 1);
+  this.setState({people: array});
+    })}
+    //delete rows[userId]
+    var elementsSupprimes = rows.splice(userId, 1);
+    rows=[elementsSupprimes]*/
+  }
+
+  //Visualiser un utilisateur à l'aide d'un Modale
+  const [open, setOpen] = useState(false)
+
+  const [coordone, setCoordone] = useState({id : 0,name:'', email:'', dateNai:'', image:''})
+
+  const visualiser = (UId,Uname,Uemail,Udate,Uimage) =>
+  {
+    setCoordone({id: UId , name: Uname , email: Uemail , dateNai: Udate, image: Uimage})
+    //e.preventDefault();pour ne pas actualisé la page
+    inverserOpen(open)
+  }
+  const inverserOpen = () =>
+  {
+    setOpen(!open);
+  }
 
   return (
-    <TableContainer component={Paper}>
-      <Table className="t" aria-label="customized table">
-        <TableHead>
-          <TableRow>
+    <div>
+      <VisualiserModal inverserOpen={inverserOpen} coordone={coordone} open={open} />
 
-            <StyledTableCell ><b>Nom complet</b></StyledTableCell>
+      <Modale  remplirTableau={remplirTableau}/>
+      <h2 className="hh">Listes des utilisateurs</h2>
 
-            <StyledTableCell align="left"><b>E-mail</b></StyledTableCell>
+      <table className="t" aria-label="customized table" >
+        <thead>
+        {!tableVide?<h5 className="tableVide" >Aucune information pour l'instant</h5> :
+          <tr className="tete">
 
-            <StyledTableCell align="left"><b>Date Naissance</b></StyledTableCell>
+            <th className="hautLigne-img" ></th>
 
-            <StyledTableCell align="center"><b>Action</b></StyledTableCell>
-            
-          </TableRow>
-        </TableHead>
+            <th className="hautLigne-name" ><h5><b>Nom complet</b></h5></th>
+
+            <th className="hautLigne-email" ><h5><b>E-mail</b></h5></th>
+
+            <th className="hautLigne-date" ><h5><b>Date Naissance</b></h5></th>
+
+            <th className="hautLigne-action" ><h5><b>Action</b></h5></th>
+
+          </tr>}
+        </thead>
+        <tbody>
+        {!tableVide?'' :
+
+          rows.map((row) => (
+
+            <tr key={row.id} className="ligne">
+              <td className="column-img">
+                <Avatare name={row.name} image={row.image}/>
+              </td>
+              <td className="column-name">
+                <h6>{row.name}</h6>
+              </td>
+
+              <td className="column-email" ><h6>{row.email}</h6></td>
+
+              <td className="column-date" ><h6>{row.DateNai}</h6></td>
+
+              <td className="column-action" >
+                <Button onClick={() => visualiser(row.id,row.name,row.email,row.DateNai,row.image)} color="primary" > <FontAwesomeIcon size="lg" icon={faEye} />    </Button><br />
+                <Button onClick={() => handleDelete(row.id)} color="primary"> <FontAwesomeIcon size="lg" icon={faTrash} />  </Button>
+              </td>
+            </tr>
+          ))
+          }
+        </tbody>
+
+        <tfoot>
+
+        </tfoot>
         
-        <TableBody id="TableBody">
-          {rows.map((row) => (
-            <StyledTableRow key={row.id}>
-
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-
-              <StyledTableCell align="left">{row.email}</StyledTableCell>
-
-              <StyledTableCell align="center">{row.DateNaissance}</StyledTableCell>
-
-              <StyledTableCell Collapse={2} align="left">
-                <Button color="primary"> <FontAwesomeIcon icon={faEye} />    </Button><br />
-                <Button color="primary"> <FontAwesomeIcon icon={faTrash} />  </Button>
-              </StyledTableCell>
-
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
+      </table>
       
-    </TableContainer>
+    </div>
     
   );
 }

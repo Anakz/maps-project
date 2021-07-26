@@ -1,15 +1,8 @@
-h2
-{
-  padding-top: 75px;
-  padding-bottom: 35px;
-}
-.hh
-{
-  color: #A1A1A1;
-}
+
 .App {
   text-align: center;
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -24,6 +17,7 @@ h2
 
 .App-header {
   background-color: #E2F5FF;
+  /*background-color: #282c34;*/
   min-height: 100vh;
   display: flex;
   flex-direction: column;

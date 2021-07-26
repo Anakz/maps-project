@@ -3,20 +3,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
 const useStyless = makeStyles((theme) => ({
-    root: {
-      
-      '& > *': {
-        margin: theme.spacing(1),
+   
+    sizeAvatar: {
+        height: theme.spacing(8),
+        width: theme.spacing(8),
       },
-    },
   }));
 
 function Avatare(props) {
     const classes = useStyless();
     return (
-        <Avatar alt={props.name} src="/static/images/avatar/1.jpg" />
+        <Avatar className={classes.sizeAvatar} alt={props.name} src={props.image} />
     )
 }
-
 
 export default Avatare

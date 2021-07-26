@@ -1,15 +1,15 @@
-import React,{useState} from 'react'
-import { Modal, ModalHeader, ModalBody,Col } from 'reactstrap';
+import React,{useState,useEffect} from 'react'
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import {Button} from '@material-ui/core'
 
 
-import './U_Modal.css'
+import './Modale.css'
 import { makeStyles } from '@material-ui/core/styles';
 
 //formulaire
-import Formulaire from './FormInfo';
+import Formulaire from '../formulaire/Formulaire';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function Modale(props) {
-    const {nom, remplissage} = props;
+    const {} = props;
     
     const classes = useStyles();
 
@@ -30,34 +30,39 @@ function Modale(props) {
     //L'ouverture et la fermeture du Modal
     const [ouvert, setOuvert] = useState(false)
 
+    //pour fermer le modal (changer la valeur de ouvert)
     const basculer = (e) => 
     {
-        setOuvert(!ouvert);
         e.preventDefault();//pour ne pas actualisé la page
+        setOuvert(!ouvert);
     }
 
+    //Les 6 variables de type state (id, name, email,date naissance, image)
+    const [id, setId] = useState(0)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [dateNai, setDateNai] = useState('')
+    const [image, setImage] = useState('')
 
-    //Les coordonées d'un utilisateur
-    const [data, setData] = useState("test")
-
-    const recevoirDonneDepuisEnfant = (data) =>
+    //modifer les coordonnées depuis le component 'Formulaire'
+    const changeCoordonne = (n,e,d,i) =>
     {
-        //data.preventDefault();
-        setData({data});
-        console.log({data});
+        setId(id => id +1)
+        setName(n);
+        setEmail(e)
+        setDateNai(d)
+        setImage(i);
+        setOuvert(false)
     }
 
-    //La nouvelle methode pour héritage des données
-    const [smia, setSmia] = useState("rien n'est écrit")
-
-    const changeSmiat = (nom) =>
-    {
-        console.log("wa akhiran")
-    }
+    //Hook useEffect pour transphérer les 6 coordonées d'une maniere automatique apres le sort de ce component 'Modale.js'
+    useEffect(() => {
+        props.remplirTableau(id,name,email,dateNai,image)
+    }, [id,name,email,dateNai,image])
 
     return (
         <div>
-            <Col><Button variant="contained" color="primary" onClick={basculer}>Ajouter un utilisateur</Button></Col>
+            <Button variant="contained" color="primary" onClick={basculer}>Ajouter un utilisateur</Button>
             <Modal isOpen={ouvert} >
                 <ModalHeader>
                     <b>Veuillez saisir les informations demandés</b> 
@@ -65,9 +70,9 @@ function Modale(props) {
                 </ModalHeader>
 
                 <ModalBody>
-                    <p>
-                        <FormInfo />
-                    </p>
+                    
+                        <Formulaire changeCoordonne={changeCoordonne} basculer={basculer}  />
+                    
                 </ModalBody>
             </Modal>
         </div>
