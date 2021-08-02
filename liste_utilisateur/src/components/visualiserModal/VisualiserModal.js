@@ -1,3 +1,4 @@
+/*
 import React, { useState } from 'react'
 import ReactModal from 'react-modal';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -109,3 +110,4 @@ function VisualiserModal(props) {
 }
 
 export default VisualiserModal
+*/

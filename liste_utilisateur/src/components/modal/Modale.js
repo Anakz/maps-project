@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import {Button} from '@material-ui/core'
 
-
 import './Modale.css'
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -38,7 +37,7 @@ function Modale(props) {
     }
 
     //Les 6 variables de type state (id, name, email,date naissance, image)
-    const [id, setId] = useState(0)
+    const [id, setId] = useState(4)
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [dateNai, setDateNai] = useState('')
@@ -62,7 +61,7 @@ function Modale(props) {
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={basculer}>Ajouter un utilisateur</Button>
+            <Button style={{marginTop : '50px'}} variant="contained" color="default" onClick={basculer}>Ajouter un utilisateur</Button>
             <Modal isOpen={ouvert} >
                 <ModalHeader>
                     <b>Veuillez saisir les informations demandés</b> 

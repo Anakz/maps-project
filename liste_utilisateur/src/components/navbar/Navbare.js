@@ -1,5 +1,6 @@
 import { Block } from '@material-ui/icons';
 import React,{useState} from 'react'
+import './Navbare.css';
 
 import {
     Collapse,
@@ -25,13 +26,14 @@ function Navbare() {
     return (
         <div >
 
-            <Nav style={{backgroundColor:'black'}}>
+            <Nav className="header">
 
                 <NavbarBrand style={{marginLeft:'20px',color:'white'}} >LOGO</NavbarBrand>
 
                 <NavItem>
                     <NavLink style={{color:'white'}} >Acceuil</NavLink>
                 </NavItem>
+                <br />
             </Nav>
 
         </div>
